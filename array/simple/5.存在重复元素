@@ -1,0 +1,75 @@
+题目：给定一个整数数组，判断是否存在重复元素。
+
+   如果任何值在数组中出现至少两次，函数返回 true。如果数组中每个元素都不相同，则返回 false。
+
+   1.思路：
+   使用哈希表
+   利用支持快速搜素和插入的动态数据结构
+   对无序数组的查找操作的时间复杂度为 O(n)，而我们会重复调用查找操作。因此，使用搜索时间更快的数据结构将加快整个算法的速度。
+
+   有许多数据结构常用作动态集合,如二进制搜索树和哈希表。这里我们需要的操作是 search 和 insert。对于平衡二叉搜索树
+   （Java 中的 TreeSet 或 TreeMap），search 和 insert 的时间复杂度均为 O(logn)。
+   对于哈希表（Java 中的 HashSet 或 HashMap），search 和 insert 的平均时间复杂度为 O(1)。
+   因此，通过使用哈希表，我们可以达到在线性时间复杂度解决问题。
+
+   public boolean containsDuplicate(int[] nums) {
+       Set<Integer> set = new HashSet<>(nums.length);
+       for (int x: nums) {
+           if (set.contains(x)) return true;
+           set.add(x);
+       }
+       return false;
+   }
+
+   时间复杂度 : O(n)。
+   search() 和 insert() 各自使用 n 次，每个操作耗费常数时间。
+
+   空间复杂度 : O(n)。哈希表占用的空间与元素数量是线性关系。
+
+
+
+
+
+   2.思路
+    如果存在重复元素，排序后他们因该相邻
+
+    本方法使用排序算法。由于比较排序算法，如堆排序，可以在最坏情况下具有O(nlogn) 的时间复杂度。因此，排序经常是很好的预处理方法。
+    排序之后，我们可以扫描已排序的数组,以查找是否有任何连续的重复元素。
+    public boolean containsDuplicate(int[] nums) {
+        Arrays.sort(nums);//使用Java自带的工具包进行排序，则效率更高。我试过用快排进行排序，无法通过数据测试。
+        for (int i = 0; i < nums.length - 1; ++i) {
+            if (nums[i] == nums[i + 1]) return true;
+        }
+        return false;
+    }
+
+复杂度分析
+
+时间复杂度 :O(nlogn)。
+排序的复杂度是 O(nlogn)，扫描的复杂度是O(n)。整个算法主要由排序过程决定，因此是 O(nlogn)。
+
+空间复杂度 : O(1)O(1)。
+这取决于具体的排序算法实现，通常而言，使用 堆排序 的话，是 O(1)O(1)。
+
+注意
+
+此处的算法实现对原始数组进行排序，修改了原始数组。通常，除非调用方清楚输入数据将被修改，否则不应该随意修改输入数据。可以先复制 nums，然后对副本进行操作。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
