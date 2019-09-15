@@ -1,0 +1,47 @@
+给定一个整数数组和一个整数 k，判断数组中是否存在两个不同的索引 i 和 j，使得 nums [i] = nums [j]，并且 i 和 j 的差的绝对值最大为 k。
+
+解题思路：
+还是利用HashMap数据结构，每次存入数值钱先看一下有没有这个数了，如果已经有了，那么看一下这两个数的索引下标之差是不是小于等于k的，如果
+是的话那么久说明找到了，返回true，如果没有找到就返回false。
+
+输入: nums = [1,2,3,1], k = 3
+输出: true
+
+题目解读：nums [i] = nums [j]  这是一个查找功能 ；两个不同的索引 i 和 j，并且 i 和 j 的差的绝对值最大为 k，在下标之差<= k的范围内存在一个nums [i] = nums [j]
+条件。
+
+这个算法利用散列表的查找的时间复杂度是O(1)实现快速的查找，在散列表中存储最多的k个元素，在这k个元素中找到nums [i] = nums [j]
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        Set<Integer> set = new HashSet<>();
+        for(int i = 0 ;i < nums.length ;i++){
+            if(set.contains(nums[i])) return true;
+            set.add(nums[i]);
+            if(set.size() > k) set.remove(nums[i-k]);
+        }
+        return false;
+    }
+}
+时间复杂度：O(n)
+我们会做 n 次 搜索，删除，插入 操作，每次操作都耗费常数时间。
+
+空间复杂度：O(min(n,k))
+开辟的额外空间取决于散列表中存储的元素的个数，也就是滑动窗口的大小 O(min(n,k))。
+
+链接：https://leetcode-cn.com/problems/contains-duplicate-ii/solution/cun-zai-zhong-fu-yuan-su-ii-by-leetcode/
+
+
+这里介绍滑动窗口算法。
+算法的目的：该算法展示了如何将嵌套for循环在少数问题中转换为单个for循环，从而减少了时间的复杂性。
+
+滑动窗口是数组/字符串问题中常用的抽象概念。窗口通常是在数组/字符串中由开始和结束索引定义的一系列元素的集合，
+即[left,right)（左闭，右开）。而滑动窗口是可以将两个边界向某一方向“滑动”的窗口。例如，我们将[left,right)
+向右滑动1个元素，则它将变为[left+1,right+1)（左闭，右开）。我们使用HashSet将字符存储在当前窗口[left,right)
+（最初left=right）中。然后我们向右侧滑动索引right，如果它不在HashSet中，我们会继续滑动 right。直到s[right]已
+经存在于HashSet中。此时，我们找到的没有重复字符的最长子字符串将会以索引left开头。如果我们对所有的leift这样做，就可以得到答案。
+
+原文链接：https://blog.csdn.net/u013132758/article/details/95798701
+滑动窗口算法(思想)   动态滑动窗口和固定滑动窗口，即在滑动时长度变化和不变的两种窗口
+https://www.cnblogs.com/HM1997/p/11149005.html
+滑动窗口法详解（经典问题）
+https://blog.csdn.net/sty945/article/details/79846516
