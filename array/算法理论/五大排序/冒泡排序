@@ -1,0 +1,49 @@
+
+Java五大排序（冒泡，选择，插入，快速，归并）
+https://blog.csdn.net/qq_36109477/article/details/82387082
+冒泡排序的就是让大的数向后冒，让小的数向前冒。通过前后两个数据比较，不断将大的元素移动到尾部。
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        int []arr= {-10, 2, 3, 246, -100, 0, 5};
+        for(int i=0;i<arr.length-1;i++) {
+            for(int j=0;j<arr.length-i-1;j++) {
+                if(arr[j]>arr[j+1]) {
+                    int temp=arr[j];
+                    arr[j]=arr[j+1];
+                    arr[j+1]=temp;
+                }
+            }
+        }
+        for(int a:arr) {
+            System.out.print(a+" ");
+        }
+    }
+这种传统的冒泡排序存在的问题：如果序列中只有少数的元素需要交换位置，则使用这种冒泡排序会造成许多的无效比较。
+
+冒泡排序的优化。如果没有任何数据交换，这说明此序列已经有序，不需要在继续后面的循环判断工作。为了实现这个想法，在代码中增加一个标记变量flag来改进这一算法。
+class Solution {
+    public boolean containsDuplicate(int[] nums) {
+        //Arrays.sort(nums);
+        //冒泡排序的优化：如果待排序的序列是(2,1,3,4,5,6,7)除了第一个和第二需要交换外，别的是正常排序。
+        boolean flag = true;
+        for(int i = 0 ; i < nums.length &&  flag; i++){//如果flag=true 序列是无需的。如果flag=false序列还是无需的，需要继续交换。
+            flag = false;
+            for(int j = 0 ;j < nums.length -i-1 ;j++){//冒泡排序每次将最大值放到数组底部。如果在一次的比较中没有发生位置交换，则说明序列已经有序。不在需要
+            进行比较。则停止冒泡排序
+                if(nums[j] > nums[j+1]){
+                    int temp = nums[j];
+                    nums[j] = nums[j+1];
+                    nums[j+1] = temp;
+                    flag = true;
+                }
+            }
+        }
+        for(int i = 0 ;i < nums.length-1 ;i++){
+            if(nums[i] == nums[i+1] ){
+                return true;
+            }
+        }
+        return false;
+    }
+}
