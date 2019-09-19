@@ -1,0 +1,47 @@
+实现 int sqrt(int x) 函数。
+
+计算并返回 x 的平方根，其中 x 是非负整数。
+
+由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。
+
+示例 1:
+
+输入: 4
+输出: 2
+示例 2:
+
+输入: 8
+输出: 2
+说明: 8 的平方根是 2.82842..., 
+     由于返回类型是整数，小数部分将被舍去。
+
+链接：https://leetcode-cn.com/problems/sqrtx
+
+题目分析： x 是非负整数。代表是大于等于0的数。所以查找目标值的范围[0,x]，但是一个数除以2的平方大于这个数本身，所以可以将
+查找范围缩小在[0,x/2].从结果上来看，需要返回的值是小于等于x的平方根的数据。这里选择右中位数，返回left。
+
+二分查找关键点：
+1.查找范围的选取 [0,size]
+2.循环条件：left < right
+3.选择左中位数，返回的left是大于等于目标值的第一个数
+4.选择右中位数，返回的left是小于等于目标值的第一个数
+
+
+需要注意，由于一个数的平方可能超出int的范围，所以使用long类型来存放数据。
+class Solution {
+    public int mySqrt(int x) {
+       // if(x == 0) return 0;
+        long left = 0;
+        long right = x/2;
+        while(left < right){
+            long mid = (left+right+1)>>>1;
+            long s = mid*mid;
+            if(s > x){
+                right = mid-1;
+            }else{
+                 left = mid;
+            }
+        }
+        return (int)left;
+    }
+}
