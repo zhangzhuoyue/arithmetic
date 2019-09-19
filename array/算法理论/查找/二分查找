@@ -1,0 +1,9 @@
+二分查找的总结：https://leetcode-cn.com/problems/search-insert-position/solution/te-bie-hao-yong-de-er-fen-cha-fa-fa-mo-ban-python-/
+
+在二分查找中，选择左中位数，还是右中位数。返回left 还是right 的选择。
+在二分查找中while() 中left < right，使用左中位数，是从左边界进行收缩，最后left >= right 跳出循环。这个时候在指定的范围
+内查找到目标值，left==right，返回right和left都是一样的。如果没有查找到目标值，这时候left > right 。这时候 返回left得到
+的是大于目标值的第一个数。
+使用右中位数，是从右边界进行收缩，最后 left >= right 跳出循环。这个时候在指定的范围
+内查找到目标值，left==right，返回right和left都是一样的。如果没有查找到目标值，这时候left > right 。这时候 返回left得到
+的是小于目标值的第一个数。
